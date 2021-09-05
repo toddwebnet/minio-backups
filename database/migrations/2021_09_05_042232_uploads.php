@@ -15,7 +15,7 @@ class Uploads extends Migration
     {
         Schema::create('jobs', function (Blueprint $table) {
             $table->id();
-            $table->string('group');
+            $table->string('grouping');
             $table->string('name');
             $table->string('path');
             $table->string('bucket');

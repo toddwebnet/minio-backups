@@ -22,7 +22,7 @@ class RunJobs extends Command
 
     private function getJobs($group)
     {
-        $sql = "select * from jobs where group = ?";
+        $sql = "select * from jobs where grouping = ?";
         return DB::select($sql, [$group]);
     }
 

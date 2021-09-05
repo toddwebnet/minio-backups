@@ -94,7 +94,7 @@ class ImportJobs extends Command
         Artisan::call("migrate:refresh");
         foreach($jobs as $group=>$collection)
         foreach ($collection as $job) {
-            $sql = "insert into  jobs (group, name, path, bucket, options) values (?,?,?,?,?)";
+            $sql = "insert into  jobs (grouping, name, path, bucket, options) values (?,?,?,?,?)";
             $params = [
                 $group,
                 $job['name'],
