@@ -74,7 +74,7 @@ class ImportJobs extends Command
                 ],
 
             ],
-            'linux' => [
+            'linux-sql' => [
                 [
                     'name' => 'sql',
                     'path' => '/home/jtodd/backups/sql',
@@ -87,6 +87,8 @@ class ImportJobs extends Command
                         'pathPrefix' => 'mysql'
                     ],
                 ],
+            ],
+            'linux-apps' => [
                 [
                     'name' => 'apps',
                     'path' => '/home/jtodd/backups/apps',
