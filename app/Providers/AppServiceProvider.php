@@ -23,6 +23,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        touch(env('DB_DATABASE'));
         //
     }
 }
