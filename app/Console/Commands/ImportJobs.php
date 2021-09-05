@@ -63,7 +63,7 @@ class ImportJobs extends Command
                 [
                     'name' => 'sql',
                     'path' => 'C:\sqlbackups',
-                    'bucket' => 'uploads',
+                    'bucket' => 'backups',
                     'options' => [
                         'overwrite_always' => [
                             'import.csv',
@@ -71,7 +71,7 @@ class ImportJobs extends Command
                         'ignore' => [],
                         'includeDateStamp' => true,
                         'preventDuplicates' => false,
-                        'pathPrefix' => 'single'
+                        'pathPrefix' => 'mssql'
                     ],
                 ],
 
