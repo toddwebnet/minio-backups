@@ -71,7 +71,7 @@ class ImportJobs extends Command
     private function procImport($jobs)
     {
         $dbPath = env('DB_DATABASE');
-        if(exists($dbPath))
+        if(file_exists($dbPath))
         unlink($dbPath);
         touch($dbPath);
 
