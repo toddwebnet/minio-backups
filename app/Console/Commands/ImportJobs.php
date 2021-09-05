@@ -65,9 +65,7 @@ class ImportJobs extends Command
                     'path' => 'C:\sqlbackups',
                     'bucket' => 'backups',
                     'options' => [
-                        'overwrite_always' => [
-                            'import.csv',
-                        ],
+                        'overwrite_always' => [],
                         'ignore' => [],
                         'includeDateStamp' => true,
                         'preventDuplicates' => false,
@@ -75,6 +73,32 @@ class ImportJobs extends Command
                     ],
                 ],
 
+            ],
+            'linux' => [
+                [
+                    'name' => 'sql',
+                    'path' => '/home/jtodd/backups/sql',
+                    'bucket' => 'backups',
+                    'options' => [
+                        'overwrite_always' => [],
+                        'ignore' => [],
+                        'includeDateStamp' => true,
+                        'preventDuplicates' => false,
+                        'pathPrefix' => 'mysql'
+                    ],
+                ],
+                [
+                    'name' => 'apps',
+                    'path' => '/home/jtodd/backups/apps',
+                    'bucket' => 'backups',
+                    'options' => [
+                        'overwrite_always' => [],
+                        'ignore' => [],
+                        'includeDateStamp' => true,
+                        'preventDuplicates' => false,
+                        'pathPrefix' => 'apps'
+                    ],
+                ],
             ]
         ];
 
@@ -92,17 +116,18 @@ class ImportJobs extends Command
         touch($dbPath);
 
         Artisan::call("migrate:refresh");
-        foreach($jobs as $group=>$collection)
-        foreach ($collection as $job) {
-            $sql = "insert into  jobs (grouping, name, path, bucket, options) values (?,?,?,?,?)";
-            $params = [
-                $group,
-                $job['name'],
-                $job['path'],
-                $job['bucket'],
-                json_encode($job['options']),
-            ];
-            DB::insert($sql, $params);
+        foreach ($jobs as $group => $collection) {
+            foreach ($collection as $job) {
+                $sql = "insert into  jobs (grouping, name, path, bucket, options) values (?,?,?,?,?)";
+                $params = [
+                    $group,
+                    $job['name'],
+                    $job['path'],
+                    $job['bucket'],
+                    json_encode($job['options']),
+                ];
+                DB::insert($sql, $params);
+            }
         }
         dump(DB::select("select * from jobs"));
     }
