@@ -70,8 +70,10 @@ class ImportJobs extends Command
 
     private function procImport($jobs)
     {
-        unlink(env('DB_DATABASE'));
-        touch(env('DB_DATABASE'));
+        $dbPath = env('DB_DATABASE');
+        if(exists($dbPath))
+        unlink($dbPath);
+        touch($dbPath);
 
         Artisan::call("migrate:refresh");
         foreach ($jobs as $job) {
