@@ -8,21 +8,22 @@ use Illuminate\Support\Facades\DB;
 
 class RunJobs extends Command
 {
-    protected $signature = "jobs:run";
+    protected $signature = "jobs:run {group}";
 
     public function handle()
     {
-        $jobs = $this->getJobs();
+        $group = $this->argument('group');
+        $jobs = $this->getJobs($group);
         foreach ($jobs as $job) {
             $job->options = json_decode($job->options, true);
             $this->processJob($job);
         }
     }
 
-    private function getJobs()
+    private function getJobs($group)
     {
-        $sql = "select * from jobs";
-        return DB::select($sql);
+        $sql = "select * from jobs where group = ?";
+        return DB::select($sql, [$group]);
     }
 
     private function getJobHistory($job, $path)
@@ -30,7 +31,7 @@ class RunJobs extends Command
         $sql = "select distinct source from uploads where path=? and job_id=?";
 
         $list = [];
-        foreach (DB::select($sql, [$path, $job->id]) as $row){
+        foreach (DB::select($sql, [$path, $job->id]) as $row) {
             $list[] = $row->source;
         }
 

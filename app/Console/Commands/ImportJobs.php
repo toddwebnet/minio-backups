@@ -8,11 +8,10 @@ use Illuminate\Support\Facades\DB;
 
 class ImportJobs extends Command
 {
-    protected $signature = "jobs:import {devProd}";
+    protected $signature = "jobs:import";
 
     public function handle()
     {
-        $devProd = $this->argument('devProd');
         $jobs = [
             'dev' => [
                 [
@@ -30,7 +29,7 @@ class ImportJobs extends Command
                     ],
                 ]
             ],
-            'win' =>[
+            'win-uploads' => [
                 [
                     'name' => 'test',
                     'path' => 'C:\inetpub\feInc\uploadnew\temp',
@@ -59,32 +58,51 @@ class ImportJobs extends Command
                         'pathPrefix' => 'multi'
                     ],
                 ]
+            ],
+            'win-sql' => [
+                [
+                    'name' => 'sql',
+                    'path' => 'C:\sqlbackups',
+                    'bucket' => 'uploads',
+                    'options' => [
+                        'overwrite_always' => [
+                            'import.csv',
+                        ],
+                        'ignore' => [],
+                        'includeDateStamp' => true,
+                        'preventDuplicates' => false,
+                        'pathPrefix' => 'single'
+                    ],
+                ],
+
             ]
         ];
-        if (isset($jobs[$devProd])) {
-            $this->procImport($jobs[$devProd]);
-        } else {
-            $this->warn('No Jobs to process');
-        }
+
+        //
+
+        $this->procImport($jobs);
     }
 
     private function procImport($jobs)
     {
         $dbPath = env('DB_DATABASE');
-        if(file_exists($dbPath))
-        unlink($dbPath);
+        if (file_exists($dbPath)) {
+            unlink($dbPath);
+        }
         touch($dbPath);
 
         Artisan::call("migrate:refresh");
-        foreach ($jobs as $job) {
-            $sql = "insert into  jobs (name, path, bucket, options) values (?,?,?,?)";
-           $params = [
-               $job['name'],
-               $job['path'],
-               $job['bucket'],
-               json_encode($job['options']),
-           ];
-           DB::insert($sql, $params);
+        foreach($jobs as $group=>$collection)
+        foreach ($collection as $job) {
+            $sql = "insert into  jobs (group, name, path, bucket, options) values (?,?,?,?,?)";
+            $params = [
+                $group,
+                $job['name'],
+                $job['path'],
+                $job['bucket'],
+                json_encode($job['options']),
+            ];
+            DB::insert($sql, $params);
         }
         dump(DB::select("select * from jobs"));
     }
