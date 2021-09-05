@@ -29,6 +29,36 @@ class ImportJobs extends Command
                         'pathPrefix' => 'downloads'
                     ],
                 ]
+            ],
+            'win' =>[
+                [
+                    'name' => 'test',
+                    'path' => 'C:\inetpub\feInc\uploadnew\temp',
+                    'bucket' => 'uploads',
+                    'options' => [
+                        'overwrite_always' => [
+                            'import.csv',
+                        ],
+                        'ignore' => [],
+                        'includeDateStamp' => false,
+                        'preventDuplicates' => true,
+                        'pathPrefix' => 'single'
+                    ],
+                ],
+                [
+                    'name' => 'test',
+                    'path' => 'C:\inetpub\feInc\uploadfeimulti\temp',
+                    'bucket' => 'uploads',
+                    'options' => [
+                        'overwrite_always' => [
+                            'import.csv',
+                        ],
+                        'ignore' => [],
+                        'includeDateStamp' => false,
+                        'preventDuplicates' => true,
+                        'pathPrefix' => 'multi'
+                    ],
+                ]
             ]
         ];
         if (isset($jobs[$devProd])) {
