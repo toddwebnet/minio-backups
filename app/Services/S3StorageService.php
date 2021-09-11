@@ -36,32 +36,36 @@ class S3StorageService
         $this->bucket = 'default';
     }
 
-    public function setBucket($bucket){
+    public function setBucket($bucket)
+    {
         $this->bucket = $bucket;
     }
 
     public function putObject($path, $fileStream)
     {
-
         $response = $this->s3Client->putObject([
                                                    'Bucket' => $this->bucket,
                                                    'Key' => $path, //add path here
                                                    'Body' => $fileStream,
                                                    'ACL' => 'public-read'
                                                ]);
-        if (
-            $response['ObjectURL'] &&
-            strpos(
-                urldecode($response['ObjectURL'])
-                , $path) !== false
-        ) {
-            $response['key'] = $path;
-        } else {
-            dd(urldecode($response['ObjectURL']), $path);
-            throw new \Exception("S3 not saving right");
+        try {
+            if (
+                $response['ObjectURL'] &&
+                strpos(
+                    urldecode($response['ObjectURL'])
+                    ,
+                    $path
+                ) !== false
+            ) {
+                $response['key'] = $path;
+            } else {
+                throw new \Exception("S3 not saving right");
+            }
+        } catch (\Exception $e) {
+            return false;
         }
         return $response;
-
     }
 
     public function getObject($objectUrl)

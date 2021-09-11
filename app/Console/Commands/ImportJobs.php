@@ -35,10 +35,8 @@ class ImportJobs extends Command
                     'path' => 'C:\inetpub\feInc\uploadnew\temp',
                     'bucket' => 'uploads',
                     'options' => [
-                        'overwrite_always' => [
-                            'import.csv',
-                        ],
-                        'ignore' => [],
+                        'overwrite_always' => [],
+                        'ignore' => ['import.csv'],
                         'includeDateStamp' => false,
                         'preventDuplicates' => true,
                         'pathPrefix' => 'single'
@@ -49,10 +47,8 @@ class ImportJobs extends Command
                     'path' => 'C:\inetpub\feInc\uploadfeimulti\temp',
                     'bucket' => 'uploads',
                     'options' => [
-                        'overwrite_always' => [
-                            'import.csv',
-                        ],
-                        'ignore' => [],
+                        'overwrite_always' => [],
+                        'ignore' => ['import.csv'],
                         'includeDateStamp' => false,
                         'preventDuplicates' => true,
                         'pathPrefix' => 'multi'

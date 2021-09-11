@@ -61,7 +61,15 @@ class RunJobs extends Command
             if (!is_dir($fullPath)) {
                 if ($this->allowedToWrite($file, $jobHistory, $preventDuplicates, $overwriteAlways, $ignore)) {
                     $this->line('Putting: ' . $file);
-                    $s3->putObject($path . '/' . $file, fopen($fullPath, 'r'));
+                    try {
+                        $putObject = $s3->putObject($path . '/' . $file, fopen($fullPath, 'r'));
+                    } catch (\Exception $e) {
+                        $putObject = false;
+                    }
+                    if ($putObject === false) {
+                        print "\n\n CANNOT CONNECT TO S3/MINIO \n\n";
+                        exit();
+                    }
                     $this->addToHistory($preventDuplicates, $job, $path, $file);
                 }
             }

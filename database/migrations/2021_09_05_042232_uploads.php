@@ -37,7 +37,7 @@ class Uploads extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
         Schema::dropIfExists('jobs');
+        Schema::dropIfExists('uploads');
     }
 }
