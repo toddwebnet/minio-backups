@@ -64,7 +64,7 @@ class RunJobs extends Command
                 '5' => 'fri',
                 '6' => 'sat',
             ];
-            $day = $days[date("w", time()];
+            $day = $days[date("w", time())];
             $path .= '/' . $day;
         }
 
