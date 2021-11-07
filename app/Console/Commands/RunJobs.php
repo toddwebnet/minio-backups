@@ -47,11 +47,25 @@ class RunJobs extends Command
         $ignore = $job->options['ignore'] ?? [];
         $pathPrefix = $job->options['pathPrefix'] ?? '';
         $includeDateStamp = $job->options['includeDateStamp'] ?? false;
+        $includeWeekStamp = $job->options['includeWeekStamp'] ?? false;
         $preventDuplicates = $job->options['preventDuplicates'] ?? true;
 
         $path = $pathPrefix;
         if ($includeDateStamp) {
             $path .= '/' . date("Y/m/d", time());
+        }
+        if ($includeWeekStamp) {
+            $days = [
+                '0' => 'sun',
+                '1' => 'mon',
+                '2' => 'tue',
+                '3' => 'wed',
+                '4' => 'thu',
+                '5' => 'fri',
+                '6' => 'sat',
+            ];
+            $day = $days[date("w", time()];
+            $path .= '/' . $day;
         }
 
         $jobHistory = ($preventDuplicates) ? $this->getJobHistory($job, $path) : [];
