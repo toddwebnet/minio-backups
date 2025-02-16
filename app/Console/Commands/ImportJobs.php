@@ -148,7 +148,61 @@ class ImportJobs extends Command
                         'pathPrefix' => ''
                     ],
                 ],
+            ],
+
+
+            'checkutility' => [
+                [
+                    'name' => 'app-data',
+                    'path' => '/home/jtodd/app-data',
+                    'bucket' => 'fei-backups',
+                    'options' => [
+                        'overwrite_always' => [],
+                        'ignore' => [],
+                        'includeWeekStamp' => false,
+                        'preventDuplicates' => true,
+                        'pathPrefix' => ''
+                    ],
+                ],
+                [
+                    'name' => 'mysql',
+                    'path' => '/home/jtodd/backups/mysql',
+                    'bucket' => 'fei-backups',
+                    'options' => [
+                        'overwrite_always' => [],
+                        'ignore' => [],
+                        'includeWeekStamp' => false,
+                        'preventDuplicates' => false,
+                        'pathPrefix' => ''
+                    ],
+                ],
+                [
+                    'name' => 'projects',
+                    'path' => '/home/jtodd/projects',
+                    'bucket' => 'fei-backups',
+                    'options' => [
+                        'overwrite_always' => [],
+                        'ignore' => [],
+                        'includeWeekStamp' => false,
+                        'preventDuplicates' => true,
+                        'pathPrefix' => ''
+                    ],
+                ],
+                [
+                    'name' => 'bin',
+                    'path' => '/home/jtodd/bin',
+                    'bucket' => 'fei-backups',
+                    'options' => [
+                        'overwrite_always' => [],
+                        'ignore' => [],
+                        'includeWeekStamp' => false,
+                        'preventDuplicates' => true,
+                        'pathPrefix' => ''
+                    ],
+                ],
             ]
+
+
         ];
 
         //
