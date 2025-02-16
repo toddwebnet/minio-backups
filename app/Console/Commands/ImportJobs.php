@@ -103,6 +103,61 @@ class ImportJobs extends Command
                         'pathPrefix' => 'apps'
                     ],
                 ],
+            ],
+
+            'salvador' => [
+                [
+                    'name' => 'backups',
+                    'path' => '/home/jtodd/data/backups',
+                    'bucket' => 'fei-backups',
+                    'options' => [
+                        'overwrite_always' => [],
+                        'ignore' => [],
+                        'includeDateStamp' => false,
+                        'includeWeekStamp' => false,
+                        'preventDuplicates' => true,
+                        'pathPrefix' => 'single'
+                    ],
+                ],
+                [
+                    'name' => 'dockers',
+                    'path' => '/home/jtodd/dockers',
+                    'bucket' => 'fei-backups',
+                    'options' => [
+                        'overwrite_always' => [],
+                        'ignore' => [],
+                        'includeDateStamp' => false,
+                        'includeWeekStamp' => false,
+                        'preventDuplicates' => true,
+                        'pathPrefix' => ''
+                    ],
+                ],
+                [
+                    'name' => 'projects',
+                    'path' => '/home/jtodd/projects',
+                    'bucket' => 'fei-backups',
+                    'options' => [
+                        'overwrite_always' => [],
+                        'ignore' => [],
+                        'includeDateStamp' => false,
+                        'includeWeekStamp' => false,
+                        'preventDuplicates' => true,
+                        'pathPrefix' => ''
+                    ],
+                ],
+                [
+                    'name' => 'sql',
+                    'path' => '/home/jtodd/backups',
+                    'bucket' => 'fei-backups',
+                    'options' => [
+                        'overwrite_always' => [],
+                        'ignore' => [],
+                        'includeDateStamp' => false,
+                        'includeWeekStamp' => false,
+                        'preventDuplicates' => false,
+                        'pathPrefix' => ''
+                    ],
+                ],
             ]
         ];
 
