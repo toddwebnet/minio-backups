@@ -23,7 +23,6 @@ class ImportJobs extends Command
                             'file1.txt',
                         ],
                         'ignore' => [],
-                        'includeDateStamp' => false,
                         'includeWeekStamp' => false,
                         'preventDuplicates' => true,
                         'pathPrefix' => 'downloads'
@@ -38,7 +37,6 @@ class ImportJobs extends Command
                     'options' => [
                         'overwrite_always' => [],
                         'ignore' => ['import.csv'],
-                        'includeDateStamp' => false,
                         'includeWeekStamp' => false,
                         'preventDuplicates' => true,
                         'pathPrefix' => 'single'
@@ -51,7 +49,6 @@ class ImportJobs extends Command
                     'options' => [
                         'overwrite_always' => [],
                         'ignore' => ['import.csv'],
-                        'includeDateStamp' => false,
                         'includeWeekStamp' => false,
                         'preventDuplicates' => true,
                         'pathPrefix' => 'multi'
@@ -66,7 +63,6 @@ class ImportJobs extends Command
                     'options' => [
                         'overwrite_always' => [],
                         'ignore' => [],
-                        'includeDateStamp' => false,
                         'includeWeekStamp' => true,
                         'preventDuplicates' => false,
                         'pathPrefix' => 'mssql'
@@ -82,7 +78,6 @@ class ImportJobs extends Command
                     'options' => [
                         'overwrite_always' => [],
                         'ignore' => [],
-                        'includeDateStamp' => false,
                         'includeWeekStamp' => true,
                         'preventDuplicates' => false,
                         'pathPrefix' => 'mysql'
@@ -97,7 +92,6 @@ class ImportJobs extends Command
                     'options' => [
                         'overwrite_always' => [],
                         'ignore' => [],
-                        'includeDateStamp' => false,
                         'includeWeekStamp' => true,
                         'preventDuplicates' => false,
                         'pathPrefix' => 'apps'
@@ -113,7 +107,6 @@ class ImportJobs extends Command
                     'options' => [
                         'overwrite_always' => [],
                         'ignore' => [],
-                        'includeDateStamp' => false,
                         'includeWeekStamp' => false,
                         'preventDuplicates' => true,
                         'pathPrefix' => 'single'
@@ -126,7 +119,6 @@ class ImportJobs extends Command
                     'options' => [
                         'overwrite_always' => [],
                         'ignore' => [],
-                        'includeDateStamp' => false,
                         'includeWeekStamp' => false,
                         'preventDuplicates' => true,
                         'pathPrefix' => ''
@@ -139,7 +131,6 @@ class ImportJobs extends Command
                     'options' => [
                         'overwrite_always' => [],
                         'ignore' => [],
-                        'includeDateStamp' => false,
                         'includeWeekStamp' => false,
                         'preventDuplicates' => true,
                         'pathPrefix' => ''
@@ -152,7 +143,6 @@ class ImportJobs extends Command
                     'options' => [
                         'overwrite_always' => [],
                         'ignore' => [],
-                        'includeDateStamp' => false,
                         'includeWeekStamp' => false,
                         'preventDuplicates' => false,
                         'pathPrefix' => ''

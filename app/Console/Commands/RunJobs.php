@@ -40,23 +40,14 @@ class RunJobs extends Command
 
     private function processJob($job)
     {
-
         $s3 = new S3StorageService();
         $s3->setBucket($job->bucket);
         $dir = $job->path;
-        $overwriteAlways = $job->options['overwrite_always'] ?? [];
-        $ignore = $job->options['ignore'] ?? [];
+        $includeWeekStamp = $job->options['includeWeekStamp'] ?? false;
         $pathPrefix = $job->grouping . '/' . $job->name . '/';
         $pathPrefix .= $job->options['pathPrefix'] ?? '';
         $pathPrefix = trim($pathPrefix, '/');
-        $includeDateStamp = $job->options['includeDateStamp'] ?? false;
-        $includeWeekStamp = $job->options['includeWeekStamp'] ?? false;
-        $preventDuplicates = $job->options['preventDuplicates'] ?? true;
-
         $path = $pathPrefix;
-        if ($includeDateStamp) {
-            $path .= '/' . date("Y/m/d", time());
-        }
         if ($includeWeekStamp) {
             $days = [
                 '0' => 'sun',
@@ -70,11 +61,22 @@ class RunJobs extends Command
             $day = $days[date("w", time())];
             $path .= '/' . $day;
         }
+        $this->processPath($s3, $dir, $path, $job);
+    }
 
+    private function processPath($s3, $dir, $path, $job)
+    {
+
+        $overwriteAlways = $job->options['overwrite_always'] ?? [];
+        $ignore = $job->options['ignore'] ?? [];
+        $preventDuplicates = $job->options['preventDuplicates'] ?? true;
         $jobHistory = ($preventDuplicates) ? $this->getJobHistory($job, $path) : [];
 
         foreach (scandir($dir) as $file) {
             $fullPath = $dir . DIRECTORY_SEPARATOR . $file;
+            if (in_array($file, ['.', '..'])) {
+                continue;
+            }
             if (!is_dir($fullPath)) {
                 if ($this->allowedToWrite($file, $jobHistory, $preventDuplicates, $overwriteAlways, $ignore)) {
                     $this->line('Putting: ' . $file);
@@ -90,6 +92,10 @@ class RunJobs extends Command
                     }
                     $this->addToHistory($preventDuplicates, $job, $path, $file);
                 }
+            } else {
+                $newDir = $dir . DIRECTORY_SEPARATOR . $file;
+                $newPath = $path . '/' . $file;
+                $this->processPath($s3, $newDir, $newPath, $job);
             }
         }
     }
