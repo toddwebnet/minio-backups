@@ -40,12 +40,15 @@ class RunJobs extends Command
 
     private function processJob($job)
     {
-        $s3 = $s3 = new S3StorageService();
+
+        $s3 = new S3StorageService();
         $s3->setBucket($job->bucket);
         $dir = $job->path;
         $overwriteAlways = $job->options['overwrite_always'] ?? [];
         $ignore = $job->options['ignore'] ?? [];
-        $pathPrefix = $job->options['pathPrefix'] ?? '';
+        $pathPrefix = $job->grouping . '/' . $job->name . '/';
+        $pathPrefix .= $job->options['pathPrefix'] ?? '';
+        $pathPrefix = trim($pathPrefix, '/');
         $includeDateStamp = $job->options['includeDateStamp'] ?? false;
         $includeWeekStamp = $job->options['includeWeekStamp'] ?? false;
         $preventDuplicates = $job->options['preventDuplicates'] ?? true;
@@ -78,6 +81,7 @@ class RunJobs extends Command
                     try {
                         $putObject = $s3->putObject($path . '/' . $file, fopen($fullPath, 'r'));
                     } catch (\Exception $e) {
+                        throw $e;
                         $putObject = false;
                     }
                     if ($putObject === false) {

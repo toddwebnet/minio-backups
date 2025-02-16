@@ -1,16 +1,28 @@
-version: '3'
 services:
-    minio:
-        #image: minio/minio
-        build:
-            context: ./minio
-        ports:
-            - 9000:9000
-            - 9001:9001
-        volumes:
-            - ${DATA_PATH}/mino/data:/export
-            - ${DATA_PATH}/minio/config:/root/.minio
+    minio-backups:
+        image: webdevops/php:7.4
+        container_name: minio-backups
+        working_dir: /app
         environment:
-            MINIO_ACCESS_KEY: ${MINIO_ACCESS_KEY}
-            MINIO_SECRET_KEY: ${MINIO_SECRET_KEY}
-        command: server --console-address :9001 /export
+            - PHP_DISPLAY_ERRORS=1
+            - PHP_MEMORY_LIMIT=2048M
+            - PHP_MAX_EXECUTION_TIME=-1
+        volumes:
+            - ~/.ssh:/root/.ssh
+            - ~/.ssh:/home/application/.ssh
+            - ../:/app
+            - ~/:/home/jtodd
+#    minio:
+#        #image: minio/minio
+#        build:
+#            context: ./minio
+#        ports:
+#            - 9000:9000
+#            - 9001:9001
+#        volumes:
+#            - ${DATA_PATH}/mino/data:/export
+#            - ${DATA_PATH}/minio/config:/root/.minio
+#        environment:
+#            MINIO_ACCESS_KEY: ${MINIO_ACCESS_KEY}
+#            MINIO_SECRET_KEY: ${MINIO_SECRET_KEY}
+#        command: server --console-address :9001 /export

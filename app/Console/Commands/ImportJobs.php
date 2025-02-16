@@ -15,9 +15,9 @@ class ImportJobs extends Command
         $jobs = [
             'dev' => [
                 [
-                    'name' => 'test',
+                    'name' => 'dev',
                     'path' => '/home/jtodd/Downloads',
-                    'bucket' => 'testing',
+                    'bucket' => 'fei-backups',
                     'options' => [
                         'overwrite_always' => [
                             'file1.txt',
@@ -32,9 +32,9 @@ class ImportJobs extends Command
             ],
             'win-uploads' => [
                 [
-                    'name' => 'test',
+                    'name' => 'uploads',
                     'path' => 'C:\inetpub\feInc\uploadnew\temp',
-                    'bucket' => 'uploads',
+                    'bucket' => 'fei-backups',
                     'options' => [
                         'overwrite_always' => [],
                         'ignore' => ['import.csv'],
@@ -45,9 +45,9 @@ class ImportJobs extends Command
                     ],
                 ],
                 [
-                    'name' => 'test',
+                    'name' => 'uploads',
                     'path' => 'C:\inetpub\feInc\uploadfeimulti\temp',
-                    'bucket' => 'uploads',
+                    'bucket' => 'fei-backups',
                     'options' => [
                         'overwrite_always' => [],
                         'ignore' => ['import.csv'],
@@ -113,13 +113,7 @@ class ImportJobs extends Command
 
     private function procImport($jobs)
     {
-        $dbPath = env('DB_DATABASE');
-        if (file_exists($dbPath)) {
-            unlink($dbPath);
-        }
-        touch($dbPath);
-
-        Artisan::call("migrate:refresh");
+        Artisan::call("migrate:fresh");
         foreach ($jobs as $group => $collection) {
             foreach ($collection as $job) {
                 $sql = "insert into  jobs (grouping, name, path, bucket, options) values (?,?,?,?,?)";
