@@ -62,7 +62,7 @@ class ImportJobs extends Command
                 [
                     'name' => 'sql',
                     'path' => 'C:\sqlbackups',
-                    'bucket' => 'backups',
+                    'bucket' => 'fei-backups',
                     'options' => [
                         'overwrite_always' => [],
                         'ignore' => [],
@@ -78,7 +78,7 @@ class ImportJobs extends Command
                 [
                     'name' => 'sql',
                     'path' => '/home/jtodd/backups/sql',
-                    'bucket' => 'backups',
+                    'bucket' => 'fei-backups',
                     'options' => [
                         'overwrite_always' => [],
                         'ignore' => [],
@@ -93,7 +93,7 @@ class ImportJobs extends Command
                 [
                     'name' => 'apps',
                     'path' => '/home/jtodd/backups/apps',
-                    'bucket' => 'backups',
+                    'bucket' => 'fei-backups',
                     'options' => [
                         'overwrite_always' => [],
                         'ignore' => [],
